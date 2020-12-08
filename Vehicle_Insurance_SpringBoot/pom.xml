@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lti</groupId>
-	<artifactId>SpringBootProject1</artifactId>
+	<artifactId>Vehicle_Insurance_SpringBoot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>SpringBootProject1</name>
+	<name>Vehicle_Insurance_SpringBoot</name>
 	<description>demo project for SpringBoot - JPA -Rest</description>
 
 	<properties>

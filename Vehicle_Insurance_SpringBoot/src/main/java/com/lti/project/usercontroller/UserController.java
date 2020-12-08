@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.project.bean.Plan;
+import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
 
@@ -79,6 +80,30 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return lst;
+	}
+	
+	@GetMapping(value="/users",produces="application/json")
+	public List<User> getUserList(){
+		List<User> userList = null; 
+		try {
+			userList =  service.getAllUsers();
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+	}
+	
+	@PostMapping(value="/adduser",consumes="application/json")
+	public boolean adduser(@RequestBody User u) {
+		boolean res = false;
+		try {
+			res = service.addUser(u);
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 	}
 	
 	

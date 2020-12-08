@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-//can put entity name
+//can put entity name hello
 @Entity
 @Table(name="plans")
 public class Plan {

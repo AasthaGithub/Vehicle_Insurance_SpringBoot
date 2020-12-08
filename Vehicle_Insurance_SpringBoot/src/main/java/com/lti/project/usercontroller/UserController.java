@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.project.bean.Plan;
 import com.lti.project.exceptions.HrExceptions;
-import com.lti.project.service.PlanService;
+import com.lti.project.service.AdminService;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
 	
 	@Autowired
-	private PlanService service;
+	private AdminService service;
 	
 	@GetMapping(value="/plans",produces="application/json")
 	public List<Plan> getPlanList(){

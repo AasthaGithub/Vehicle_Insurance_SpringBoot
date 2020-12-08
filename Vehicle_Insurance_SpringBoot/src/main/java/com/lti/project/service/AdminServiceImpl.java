@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lti.project.bean.Plan;
-import com.lti.project.dao.PlanDao;
+import com.lti.project.dao.AdminDao;
 import com.lti.project.exceptions.HrExceptions;
 
 @Service
-public class PlanServiceImpl implements PlanService{
+public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
-	private PlanDao dao;
+	private AdminDao dao;
 
 	@Override
 	public List<Plan> getAllPlans() throws HrExceptions {

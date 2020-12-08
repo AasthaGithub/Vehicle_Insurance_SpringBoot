@@ -5,7 +5,7 @@ import java.util.List;
 import com.lti.project.bean.Plan;
 import com.lti.project.exceptions.HrExceptions;
 
-public interface PlanDao {
+public interface AdminDao {
 	
 	public List<Plan> getAllPlans() throws HrExceptions;
 	

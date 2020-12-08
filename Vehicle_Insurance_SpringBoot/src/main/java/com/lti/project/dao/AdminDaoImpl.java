@@ -13,7 +13,7 @@ import com.lti.project.bean.Plan;
 import com.lti.project.exceptions.HrExceptions;
 
 @Repository
-public class PlanDaoImpl implements PlanDao{
+public class AdminDaoImpl implements AdminDao{
 	
 	@PersistenceContext
 	private EntityManager manager;

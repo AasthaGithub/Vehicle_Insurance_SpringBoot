@@ -20,13 +20,20 @@ public class ClaimsServiceImpl implements ClaimsService  {
 		return dao.getClaims();
 		//user method
 	}
-	//public Claims claimPolicy(Claims pol); //user method
+	public boolean claimPolicy(long polNum,String reason) {
+		return dao.claimPolicy(polNum, reason);
+		//user method
+	}
 	
 	public int approveClaim(long reqNum) {
 		return dao.approveClaim(reqNum);
 		//admin method
 	}
 	
+	public int declineClaim(long reqNum) {
+		return dao.declineClaim(reqNum);
+		//admin method
+	}
 	public  List<Claims> viewClaims(){
 		return dao.viewClaims();
 		//admin method

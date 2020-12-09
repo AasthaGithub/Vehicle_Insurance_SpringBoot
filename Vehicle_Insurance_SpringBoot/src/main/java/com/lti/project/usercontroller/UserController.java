@@ -1,5 +1,6 @@
 package com.lti.project.usercontroller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.project.bean.Plan;
+import com.lti.project.bean.Policy;
 import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
+import com.lti.project.service.PolicyService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,6 +24,9 @@ public class UserController {
 	
 	@Autowired
 	private AdminService service;
+	
+	@Autowired
+	private PolicyService policy_service;
 	
 	@GetMapping(value="/plans",produces="application/json")
 	public List<Plan> getPlanList(){
@@ -105,6 +111,51 @@ public class UserController {
 		}
 		return res;
 	}
+	
+	@GetMapping(value="/policies",produces="application/json")
+	public List<Policy> getPolicyList(){
+		List<Policy> policyList = null; 
+		try {
+			policyList =  policy_service.getAllPolicies();
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return policyList;
+	}
+	
+	@PostMapping(value="/addpolicy",consumes="application/json")
+	public boolean addPolicy(@RequestBody Policy p) {
+		boolean res = false;
+		try {
+			res = policy_service.addPolicy(p);
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@GetMapping(value="/updatepolicy/{id}/{newEndDate}")
+	public int updatePolicy(@PathVariable int id,@PathVariable Date newEndDate) {
+		int res = 0;
+		try {
+			res = policy_service.updatePolicyEndDate(id,newEndDate);
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@GetMapping(value="/deletepolicy/{id}")
+	public boolean deletePolicy(@PathVariable int id) {
+		boolean res = false;
+		try {
+			res = policy_service.deletePolicy(id);
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 	
 	
 }

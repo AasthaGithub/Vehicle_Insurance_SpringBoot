@@ -38,13 +38,13 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		
 		int appramt=0;
 		if (reason.equals("Natural Disaster")){
-			appramt=0.8*requestedAmt;
+			appramt=(int) (0.8*reqamt);
 		}
 		else if (reason.equals("Road Accident")){
-			appramt=0.65*requestedAmt;
+			appramt=(int) (0.65*reqamt);
 		}
 		else if (reason.equals("Theft")){
-			appramt=0.5*requestedAmt;
+			appramt=(int) (0.5*reqamt);
 		}
 		else if (reason.equals("Man Made Disaster")){
 			appramt=0;
@@ -61,6 +61,7 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		clm.setClaimDate(strDate);  //today's date
 		clm.setPolicyNum(polNum);
 		//user method	
+		return true;
 	}
 	
 	
@@ -93,6 +94,6 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		List<Claims> claimList= qry.getResultList();
 		return claimList;
 		//admin method
-	}
+	}	
 	
 }

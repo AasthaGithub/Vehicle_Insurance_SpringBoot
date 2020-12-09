@@ -20,8 +20,8 @@ public class ClaimsServiceImpl implements ClaimsService  {
 		return dao.getClaims();
 		//user method
 	}
-	public boolean claimPolicy(long polNum,String reason) {
-		return dao.claimPolicy(polNum, reason);
+	public boolean claimPolicy(long polNum,long reqamt,String reason) {
+		return dao.claimPolicy(polNum, reqamt,reason);
 		//user method
 	}
 	

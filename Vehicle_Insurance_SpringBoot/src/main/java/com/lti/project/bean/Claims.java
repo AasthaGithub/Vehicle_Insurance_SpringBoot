@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="claims")
-public class Claim {
+public class Claims {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="claim_seq")
@@ -98,7 +98,7 @@ public class Claim {
 				+ reason + "]";
 	}
 
-	public Claim(long request_Num, String claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt,
+	public Claims(long request_Num, String claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt,
 			String reason) {
 		super();
 		Request_Num = request_Num;
@@ -110,7 +110,7 @@ public class Claim {
 		this.reason = reason;
 	}
 
-	public Claim() {
+	public Claims() {
 		super();
 	}
 	

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lti.project.bean.Claim;
+import com.lti.project.bean.Claims;
 import com.lti.project.dao.ClaimsDao;
 
 @Service
@@ -16,7 +16,7 @@ public class ClaimsServiceImpl implements ClaimsService  {
 	private ClaimsDao dao;
 	
 	
-	public List<Claim> getClaims(){
+	public List<Claims> getClaims(){
 		return dao.getClaims();
 		//user method
 	}
@@ -34,7 +34,7 @@ public class ClaimsServiceImpl implements ClaimsService  {
 		return dao.declineClaim(reqNum);
 		//admin method
 	}
-	public  List<Claim> viewClaims(){
+	public  List<Claims> viewClaims(){
 		return dao.viewClaims();
 		//admin method
 	}

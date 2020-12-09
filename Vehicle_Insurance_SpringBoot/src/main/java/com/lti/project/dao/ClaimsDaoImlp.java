@@ -73,7 +73,7 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		qry.setParameter("reqno",reqNum);
 		int i = qry.executeUpdate();
 		return i;
-		//admin method	
+		//adminDaoImpl method	
 	}
 	
 	public int declineClaim(long reqNum) {

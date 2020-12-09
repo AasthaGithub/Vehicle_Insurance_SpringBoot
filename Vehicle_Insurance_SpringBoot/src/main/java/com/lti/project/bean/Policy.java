@@ -16,9 +16,9 @@ public class Policy {
 	
 	@Id
 	@Column(name="Policy_Num")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="POLICY_GEN")
-    //@SequenceGenerator(name="POLICY_GEN",sequenceName="policy_seq",allocationSize=1)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)   // MySQL specific
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="POLICY_GEN")
+    @SequenceGenerator(name="POLICY_GEN",sequenceName="policy_seq",allocationSize=1)
 	private int policyNum;
 	
 	@Column(name="Vehicle_Reg_Num")

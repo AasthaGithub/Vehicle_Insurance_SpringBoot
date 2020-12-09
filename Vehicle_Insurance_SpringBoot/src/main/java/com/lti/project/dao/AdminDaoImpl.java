@@ -10,10 +10,11 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.lti.project.bean.Plan;
+import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
 
 @Repository
-public class PlanDaoImpl implements PlanDao{
+public class AdminDaoImpl implements AdminDao{
 	
 	@PersistenceContext
 	private EntityManager manager;
@@ -59,6 +60,21 @@ public class PlanDaoImpl implements PlanDao{
 		qry.setParameter("vehicle", "%"+vehicleType+"%");
 		List<Long> lst = qry.getResultList();
 		return lst;
+	}
+
+	@Transactional
+	@Override
+	public boolean addUser(User u) throws HrExceptions {
+		manager.persist(u);
+		return true;
+	}
+
+	@Override
+	public List<User> getAllUsers() throws HrExceptions {
+		String strQry = "from User";
+		Query qry = manager.createQuery(strQry);
+		List<User> userList= qry.getResultList();
+		return userList;
 	}
 
 }

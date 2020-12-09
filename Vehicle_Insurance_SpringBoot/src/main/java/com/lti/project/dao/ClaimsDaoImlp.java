@@ -10,7 +10,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.lti.project.bean.Claims;
+import com.lti.project.bean.Claim;
 import com.lti.project.bean.Plan;
 
 @Repository
@@ -19,11 +19,11 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 	@PersistenceContext
 	private EntityManager manager;
 
-	public List<Claims> getClaims()
+	public List<Claim> getClaims()
 	{
 		String strQry = "from Claims";
 		Query qry = manager.createQuery(strQry);
-		List<Claims> claimList= qry.getResultList();
+		List<Claim> claimList= qry.getResultList();
 		return claimList;
 		//user method
 		
@@ -53,7 +53,7 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
 	    String strDate = formatter.format(date);
 		
-		Claims clm=new Claims();
+		Claim clm=new Claim();
 		//clm.setReqAmt(reqamt);
 		clm.setReason(reason);
 		clm.setApprovAmt(appramt);
@@ -87,11 +87,11 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		//admin method	
 	}
 	
-	public List<Claims> viewClaims(){
+	public List<Claim> viewClaims(){
 		
 		String strQry = "from Claims";
 		Query qry = manager.createQuery(strQry);
-		List<Claims> claimList= qry.getResultList();
+		List<Claim> claimList= qry.getResultList();
 		return claimList;
 		//admin method
 	}	

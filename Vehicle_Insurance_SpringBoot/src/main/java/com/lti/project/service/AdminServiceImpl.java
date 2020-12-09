@@ -57,4 +57,9 @@ public class AdminServiceImpl implements AdminService{
 		return dao.getAllUsers();
 	}
 
+	@Override
+	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
+		return dao.CheckLogin(EnteredEmail, EnteredPassword);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.lti.project.bean;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class Claims {
 	private long Request_Num;
 	
 	@Column(name="Claim_Date")
-	private String claimDate;
+	private Date claimDate;
 	
 	@Column(name="Policy_Num ")
 	private long policyNum;
@@ -43,11 +45,13 @@ public class Claims {
 		Request_Num = request_Num;
 	}
 
-	public String getClaimDate() {
+	
+
+	public Date getClaimDate() {
 		return claimDate;
 	}
 
-	public void setClaimDate(String claimDate) {
+	public void setClaimDate(Date claimDate) {
 		this.claimDate = claimDate;
 	}
 
@@ -97,8 +101,28 @@ public class Claims {
 				+ ", ApprovStatus=" + ApprovStatus + ", reqAmt=" + reqAmt + ", approvAmt=" + approvAmt + ", reason="
 				+ reason + "]";
 	}
+	
+	
+	
+	public Claims(Date claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt, String reason) {
+		super();
+		this.claimDate = claimDate;
+		this.policyNum = policyNum;
+		ApprovStatus = approvStatus;
+		this.reqAmt = reqAmt;
+		this.approvAmt = approvAmt;
+		this.reason = reason;
+	}
 
-	public Claims(long request_Num, String claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt,
+	public Claims(Date claimDate, long policyNum, long reqAmt, String reason) {
+		super();
+		this.claimDate = claimDate;
+		this.policyNum = policyNum;
+		this.reqAmt = reqAmt;
+		this.reason = reason;
+	}
+
+	public Claims(long request_Num, Date claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt,
 			String reason) {
 		super();
 		Request_Num = request_Num;

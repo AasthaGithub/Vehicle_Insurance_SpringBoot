@@ -77,4 +77,21 @@ public class AdminDaoImpl implements AdminDao{
 		return userList;
 	}
 
+	@Override
+	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
+		String strQry ="Select userPswd from User Where userEmail  = :EnteredEmail";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("EnteredEmail",EnteredEmail);
+		String ActualPassword= (String) qry.getSingleResult();
+		
+		if ((ActualPassword).equals(EnteredPassword))
+		{
+		return true;
+		}
+		else 
+		{
+		return false;
+		}
+	}
+
 }

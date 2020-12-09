@@ -1,3 +1,4 @@
+
 package com.lti.project.usercontroller;
 
 import java.sql.Date;
@@ -11,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lti.project.bean.Claims;
 import com.lti.project.bean.Plan;
 import com.lti.project.bean.Policy;
 import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
+import com.lti.project.service.ClaimsService;
 import com.lti.project.service.PolicyService;
 
 @RestController
@@ -27,6 +30,9 @@ public class UserController {
 	
 	@Autowired
 	private PolicyService policy_service;
+	
+	@Autowired
+	private ClaimsService claim_service;
 	
 	@GetMapping(value="/plans",produces="application/json")
 	public List<Plan> getPlanList(){
@@ -112,6 +118,18 @@ public class UserController {
 		return res;
 	}
 	
+	@GetMapping(value="/login/{EnteredEmail}/{EnteredPassword}")
+	public boolean checkLogin(@PathVariable String EnteredEmail, @PathVariable String EnteredPassword ){
+		boolean loginStatus = false;
+		try {
+			 loginStatus = service.CheckLogin(EnteredEmail, EnteredPassword);
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return loginStatus;
+	}
+	
 	@GetMapping(value="/policies",produces="application/json")
 	public List<Policy> getPolicyList(){
 		List<Policy> policyList = null; 
@@ -156,6 +174,27 @@ public class UserController {
 		return res;
 	}
 	
+	@GetMapping(value="/claims",produces="application/json")
+	public List<Claims> getClaimList(){
+		List<Claims> claimList = null; 
+		try {
+			claimList =  claim_service.getClaims();
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return claimList;
+	}
 	
-	
+	@PostMapping(value="/addClaims",consumes="application/json")
+	public boolean claimPolicy(@RequestBody Claims clm) {
+		boolean res = false;
+		try {
+			res = claim_service.claimPolicy(clm);
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
 }

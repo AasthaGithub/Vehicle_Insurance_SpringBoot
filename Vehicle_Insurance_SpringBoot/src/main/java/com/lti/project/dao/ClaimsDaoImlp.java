@@ -1,25 +1,24 @@
 package com.lti.project.dao;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
 import com.lti.project.bean.Claims;
-import com.lti.project.bean.Plan;
+import com.lti.project.exceptions.HrExceptions;
 
 @Repository
-public class ClaimsDaoImlp implements ClaimsDao  {
+public class ClaimsDaoImlp implements ClaimsDao{
 
 	@PersistenceContext
 	private EntityManager manager;
 
-	public List<Claims> getClaims()
+	public List<Claims> getClaims() throws HrExceptions
 	{
 		String strQry = "from Claims";
 		Query qry = manager.createQuery(strQry);
@@ -29,42 +28,32 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		
 		
 	}
-	public  boolean claimPolicy(long polNum, long reqamt, String reason)
+	
+	@Transactional
+	public  boolean claimPolicy(Claims clm) throws HrExceptions
 	{	
-		//String strQry ="Select planAmt from Policy pl JOIN  Plan pa WHERE pl.planId==pa.planId"
-		//Query qry = manager.createQuery(strQry);
-		//String resultPlanAmt= qry.getResult();
-		// if (reqamt<=resultPlanAmt && reason.equals("Natural Disaster")) -----
-		
 		int appramt=0;
-		if (reason.equals("Natural Disaster")){
-			appramt=(int) (0.8*reqamt);
+		if (clm.getReason().equals("Natural Disaster")){
+			appramt=(int) (0.8*clm.getReqAmt());
 		}
-		else if (reason.equals("Road Accident")){
-			appramt=(int) (0.65*reqamt);
+		else if (clm.getReason().equals("Road Accident")){
+			appramt=(int) (0.65*clm.getReqAmt());
 		}
-		else if (reason.equals("Theft")){
-			appramt=(int) (0.5*reqamt);
+		else if (clm.getReason().equals("Theft")){
+			appramt=(int) (0.5*clm.getReqAmt());
 		}
-		else if (reason.equals("Man Made Disaster")){
+		else if (clm.getReason().equals("Man Made Disaster")){
 			appramt=0;
 		}
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-	    String strDate = formatter.format(date);
 		
-		Claims clm=new Claims();
-		//clm.setReqAmt(reqamt);
-		clm.setReason(reason);
 		clm.setApprovAmt(appramt);
 		clm.setApprovStatus("Pending");
-		clm.setClaimDate(strDate);  //today's date
-		clm.setPolicyNum(polNum);
-		//user method	
+		manager.persist(clm);
+		
 		return true;
 	}
 	
-	
+	@Transactional
 	public int approveClaim(long reqNum) {
 		
 		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
@@ -76,6 +65,7 @@ public class ClaimsDaoImlp implements ClaimsDao  {
 		//adminDaoImpl method	
 	}
 	
+	@Transactional
 	public int declineClaim(long reqNum) {
 		
 		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";

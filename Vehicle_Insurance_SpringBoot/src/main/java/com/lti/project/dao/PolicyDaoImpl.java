@@ -8,9 +8,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Repository;
+
 import com.lti.project.bean.Policy;
 import com.lti.project.exceptions.HrExceptions;
 
+@Repository
 public class PolicyDaoImpl implements PolicyDao {
 	
 	@PersistenceContext

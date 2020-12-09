@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.lti.project.bean.Claims;
 import com.lti.project.dao.ClaimsDao;
+import com.lti.project.exceptions.HrExceptions;
 
 @Service
 public class ClaimsServiceImpl implements ClaimsService  {
@@ -16,14 +17,16 @@ public class ClaimsServiceImpl implements ClaimsService  {
 	private ClaimsDao dao;
 	
 	
-	public List<Claims> getClaims(){
+	public List<Claims> getClaims() throws HrExceptions{
 		return dao.getClaims();
 		//user method
 	}
-	public boolean claimPolicy(long polNum,long reqamt,String reason) {
-		return dao.claimPolicy(polNum, reqamt,reason);
-		//user method
+	
+	@Override
+	public boolean claimPolicy(Claims clm) throws HrExceptions {
+		return dao.claimPolicy(clm);
 	}
+	
 	
 	public int approveClaim(long reqNum) {
 		return dao.approveClaim(reqNum);
@@ -38,6 +41,9 @@ public class ClaimsServiceImpl implements ClaimsService  {
 		return dao.viewClaims();
 		//admin method
 	}
+
+
+	
 
 }
 

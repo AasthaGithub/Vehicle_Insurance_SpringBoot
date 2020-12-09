@@ -21,5 +21,7 @@ public interface AdminDao {
 	public List<User> getAllUsers() throws HrExceptions;
 	
 	public boolean addUser(User u) throws HrExceptions;
+	
+	public boolean CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
 
 }

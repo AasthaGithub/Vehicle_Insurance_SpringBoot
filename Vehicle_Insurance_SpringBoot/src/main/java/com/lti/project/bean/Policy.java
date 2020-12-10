@@ -2,11 +2,17 @@ package com.lti.project.bean;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,19 +22,22 @@ public class Policy {
 	
 	@Id
 	@Column(name="Policy_Num")
-	// @GeneratedValue(strategy=GenerationType.IDENTITY)   // MySQL specific
+//	@OneToOne
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="POLICY_GEN")
     @SequenceGenerator(name="POLICY_GEN",sequenceName="policy_seq",allocationSize=1)
-	private int policyNum;
+	private long policyNum;
 	
-	@Column(name="Vehicle_Reg_Num")
-	private String vehicleRegNum;
+	@JoinColumn(name="Vehicle_Reg_Num")
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Vehicle vehicleRegNum;
 	
-	@Column(name="User_Id")
-	private int userId;
+	@JoinColumn(name="User_Id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	private User userId;
 	
-	@Column(name="Plan_Id")
-	private int planId;
+	@JoinColumn(name="Plan_Id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Plan planId;
 	
 	@Column(name="Period")
 	private int period;
@@ -43,7 +52,7 @@ public class Policy {
 		super();
 	}
 
-	public Policy(int policyNum, String vehicleRegNum, int userId, int planId, int period, Date startDate,
+	public Policy(long policyNum, Vehicle vehicleRegNum, User userId, Plan planId, int period, Date startDate,
 			Date endDate) {
 		super();
 		this.policyNum = policyNum;
@@ -62,35 +71,36 @@ public class Policy {
 				+ "]";
 	}
 
-	public int getPolicyNum() {
+	public long getPolicyNum() {
 		return policyNum;
 	}
 
-	public void setPolicyNum(int policyNum) {
+	public void setPolicyNum(long policyNum) {
 		this.policyNum = policyNum;
 	}
 
-	public String getVehicleRegNum() {
+	
+	public Vehicle getVehicleRegNum() {
 		return vehicleRegNum;
 	}
 
-	public void setVehicleRegNum(String vehicleRegNum) {
+	public void setVehicleRegNum(Vehicle vehicleRegNum) {
 		this.vehicleRegNum = vehicleRegNum;
 	}
 
-	public int getUserId() {
+	public User getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 
-	public int getPlanId() {
+	public Plan getPlanId() {
 		return planId;
 	}
 
-	public void setPlanId(int planId) {
+	public void setPlanId(Plan planId) {
 		this.planId = planId;
 	}
 

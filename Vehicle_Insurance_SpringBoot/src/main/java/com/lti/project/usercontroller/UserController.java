@@ -16,10 +16,10 @@ import com.lti.project.bean.Claims;
 import com.lti.project.bean.Plan;
 import com.lti.project.bean.Policy;
 import com.lti.project.bean.User;
+import com.lti.project.bean.Vehicle;
 import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
-import com.lti.project.service.ClaimsService;
-import com.lti.project.service.PolicyService;
+import com.lti.project.service.UserService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -29,10 +29,7 @@ public class UserController {
 	private AdminService service;
 	
 	@Autowired
-	private PolicyService policy_service;
-	
-	@Autowired
-	private ClaimsService claim_service;
+	private UserService user_service;
 	
 	@GetMapping(value="/plans",produces="application/json")
 	public List<Plan> getPlanList(){
@@ -40,7 +37,6 @@ public class UserController {
 		try {
 			planList =  service.getAllPlans();
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return planList;
@@ -52,7 +48,6 @@ public class UserController {
 		try {
 			res = service.addPlan(p);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
@@ -64,7 +59,6 @@ public class UserController {
 		try {
 			res = service.updatePlan(id,amt);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
@@ -76,7 +70,6 @@ public class UserController {
 		try {
 			res = service.deletePlan(id);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
@@ -86,7 +79,7 @@ public class UserController {
 	public List<Long> getPlan(@PathVariable String vehicle){
 		List<Long> lst = null; 
 		try {
-			lst =  service.findPlanByVehicle(vehicle);
+			lst =  service.estimatePlan(vehicle);
 		} catch (HrExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,13 +87,24 @@ public class UserController {
 		return lst;
 	}
 	
+	@GetMapping(value="/findAmt/{vehicle}/{plan}")
+	public Long getPlanAmt(@PathVariable String vehicle,@PathVariable String plan){
+		Long res = null; 
+		try {
+			res =  service.PlanAmount(vehicle,plan);
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 	@GetMapping(value="/users",produces="application/json")
 	public List<User> getUserList(){
 		List<User> userList = null; 
 		try {
-			userList =  service.getAllUsers();
+			userList =  user_service.getAllUsers();
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return userList;
@@ -110,9 +114,8 @@ public class UserController {
 	public boolean adduser(@RequestBody User u) {
 		boolean res = false;
 		try {
-			res = service.addUser(u);
+			res = user_service.addUser(u);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
@@ -122,9 +125,8 @@ public class UserController {
 	public boolean checkLogin(@PathVariable String EnteredEmail, @PathVariable String EnteredPassword ){
 		boolean loginStatus = false;
 		try {
-			 loginStatus = service.CheckLogin(EnteredEmail, EnteredPassword);
+			 loginStatus = user_service.CheckLogin(EnteredEmail, EnteredPassword);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return loginStatus;
@@ -134,18 +136,41 @@ public class UserController {
 	public List<Policy> getPolicyList(){
 		List<Policy> policyList = null; 
 		try {
-			policyList =  policy_service.getAllPolicies();
+			policyList =  user_service.getAllPolicies();
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
 		return policyList;
 	}
 	
+	@GetMapping(value="/vehicles",produces="application/json")
+	public List<Vehicle> getvehicleList(){
+		List<Vehicle> vehicleList = null; 
+		try {
+			vehicleList =  user_service.getAllVehicle();
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return vehicleList;
+	}
+	
+	
 	@PostMapping(value="/addpolicy",consumes="application/json")
 	public boolean addPolicy(@RequestBody Policy p) {
 		boolean res = false;
 		try {
-			res = policy_service.addPolicy(p);
+			res = user_service.addPolicy(p);
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@PostMapping(value="/addvehicle",consumes="application/json")
+	public boolean addVehicle(@RequestBody Vehicle v) {
+		boolean res = false;
+		try {
+			res = user_service.addVehicle(v);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
@@ -156,7 +181,7 @@ public class UserController {
 	public int updatePolicy(@PathVariable int id,@PathVariable Date newEndDate) {
 		int res = 0;
 		try {
-			res = policy_service.updatePolicyEndDate(id,newEndDate);
+			res = user_service.updatePolicyEndDate(id,newEndDate);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
@@ -167,7 +192,7 @@ public class UserController {
 	public boolean deletePolicy(@PathVariable int id) {
 		boolean res = false;
 		try {
-			res = policy_service.deletePolicy(id);
+			res = user_service.deletePolicy(id);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
@@ -178,21 +203,19 @@ public class UserController {
 	public List<Claims> getClaimList(){
 		List<Claims> claimList = null; 
 		try {
-			claimList =  claim_service.getClaims();
+			claimList =  user_service.getClaims();
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return claimList;
 	}
 	
-	@PostMapping(value="/addClaims",consumes="application/json")
+	@PostMapping(value="/addclaims",consumes="application/json")
 	public boolean claimPolicy(@RequestBody Claims clm) {
 		boolean res = false;
 		try {
-			res = claim_service.claimPolicy(clm);
+			res = user_service.claimPolicy(clm);
 		} catch (HrExceptions e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;

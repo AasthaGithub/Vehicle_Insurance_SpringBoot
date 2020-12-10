@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lti.project.bean.Claims;
 import com.lti.project.bean.Plan;
 import com.lti.project.bean.User;
 import com.lti.project.dao.AdminDao;
@@ -42,24 +43,31 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public List<Long> findPlanByVehicle(String vehicleType) throws HrExceptions {
-		return dao.findPlanByVehicle(vehicleType);
+	public List<Long> estimatePlan(String vehicleType) throws HrExceptions {
+		return dao.estimatePlan(vehicleType);
 	}
 	
-	@Transactional
 	@Override
-	public boolean addUser(User u) throws HrExceptions {
-		return dao.addUser(u);
+	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions {
+		return dao.PlanAmount(vehicleType, planType);
+	}
+	
+	public int approveClaim(long reqNum) {
+		return dao.approveClaim(reqNum);
+		//admin method
+	}
+	
+	public int declineClaim(long reqNum) {
+		return dao.declineClaim(reqNum);
+		//admin method
+	}
+	public  List<Claims> viewClaims(){
+		return dao.viewClaims();
+		//admin method
 	}
 
-	@Override
-	public List<User> getAllUsers() throws HrExceptions {
-		return dao.getAllUsers();
-	}
+	
 
-	@Override
-	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
-		return dao.CheckLogin(EnteredEmail, EnteredPassword);
-	}
+	
 
 }

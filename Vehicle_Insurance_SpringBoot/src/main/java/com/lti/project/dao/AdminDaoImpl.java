@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.lti.project.bean.Claims;
 import com.lti.project.bean.Plan;
 import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
@@ -54,44 +55,58 @@ public class AdminDaoImpl implements AdminDao{
 	}
 
 	@Override
-	public List<Long> findPlanByVehicle(String vehicleType) throws HrExceptions {
+	public List<Long> estimatePlan(String vehicleType) throws HrExceptions {
 		String strQry = "select planAmt from Plan where vehicleType like :vehicle";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("vehicle", "%"+vehicleType+"%");
 		List<Long> lst = qry.getResultList();
 		return lst;
 	}
-
+	
+	@Override
+	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions {
+		String strQry = "select planAmt from Plan where vehicleType like :vehicle and planType like :plan";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("vehicle", "%"+vehicleType+"%");
+		qry.setParameter("plan", "%"+planType+"%");
+		Long res = (Long)qry.getSingleResult();
+		return res;
+	}
+	
 	@Transactional
-	@Override
-	public boolean addUser(User u) throws HrExceptions {
-		manager.persist(u);
-		return true;
-	}
-
-	@Override
-	public List<User> getAllUsers() throws HrExceptions {
-		String strQry = "from User";
-		Query qry = manager.createQuery(strQry);
-		List<User> userList= qry.getResultList();
-		return userList;
-	}
-
-	@Override
-	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
-		String strQry ="Select userPswd from User Where userEmail  = :EnteredEmail";
-		Query qry = manager.createQuery(strQry);
-		qry.setParameter("EnteredEmail",EnteredEmail);
-		String ActualPassword= (String) qry.getSingleResult();
+	public int approveClaim(long reqNum) {
 		
-		if ((ActualPassword).equals(EnteredPassword))
-		{
-		return true;
-		}
-		else 
-		{
-		return false;
-		}
+		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("stat","Approved");
+		qry.setParameter("reqno",reqNum);
+		int i = qry.executeUpdate();
+		return i;
+		//adminDaoImpl method	
 	}
+	
+	@Transactional
+	public int declineClaim(long reqNum) {
+		
+		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("stat","Declined");
+		qry.setParameter("reqno",reqNum);
+		int i = qry.executeUpdate();
+		return i;
+		//admin method	
+	}
+	
+	public List<Claims> viewClaims(){
+		
+		String strQry = "from Claims";
+		Query qry = manager.createQuery(strQry);
+		List<Claims> claimList= qry.getResultList();
+		return claimList;
+		//admin method
+	}
+
+		
+
 
 }

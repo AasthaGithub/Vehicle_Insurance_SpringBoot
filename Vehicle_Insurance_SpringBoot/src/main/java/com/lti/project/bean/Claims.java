@@ -2,11 +2,15 @@ package com.lti.project.bean;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -15,6 +19,7 @@ import javax.persistence.Table;
 public class Claims {
 	
 	@Id
+	@Column(name="Request_Num")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="claim_seq")
     @SequenceGenerator(name="claim_seq", sequenceName="claim_seq", allocationSize=1)
 	private long Request_Num;
@@ -22,8 +27,9 @@ public class Claims {
 	@Column(name="Claim_Date")
 	private Date claimDate;
 	
-	@Column(name="Policy_Num ")
-	private long policyNum;
+	@JoinColumn(name="Policy_Num")
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Policy policyNum;
 	
 	@Column(name="Approval_Status")
 	private String ApprovStatus;
@@ -55,11 +61,13 @@ public class Claims {
 		this.claimDate = claimDate;
 	}
 
-	public long getPolicyNum() {
+	
+
+	public Policy getPolicyNum() {
 		return policyNum;
 	}
 
-	public void setPolicyNum(long policyNum) {
+	public void setPolicyNum(Policy policyNum) {
 		this.policyNum = policyNum;
 	}
 
@@ -104,7 +112,7 @@ public class Claims {
 	
 	
 	
-	public Claims(Date claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt, String reason) {
+	public Claims(Date claimDate, Policy policyNum, String approvStatus, long reqAmt, long approvAmt, String reason) {
 		super();
 		this.claimDate = claimDate;
 		this.policyNum = policyNum;
@@ -114,7 +122,7 @@ public class Claims {
 		this.reason = reason;
 	}
 
-	public Claims(Date claimDate, long policyNum, long reqAmt, String reason) {
+	public Claims(Date claimDate,Policy policyNum, long reqAmt, String reason) {
 		super();
 		this.claimDate = claimDate;
 		this.policyNum = policyNum;
@@ -122,7 +130,7 @@ public class Claims {
 		this.reason = reason;
 	}
 
-	public Claims(long request_Num, Date claimDate, long policyNum, String approvStatus, long reqAmt, long approvAmt,
+	public Claims(long request_Num, Date claimDate, Policy policyNum, String approvStatus, long reqAmt, long approvAmt,
 			String reason) {
 		super();
 		Request_Num = request_Num;

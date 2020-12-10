@@ -2,6 +2,7 @@ package com.lti.project.dao;
 
 import java.util.List;
 
+import com.lti.project.bean.Claims;
 import com.lti.project.bean.Plan;
 import com.lti.project.bean.User;
 import com.lti.project.exceptions.HrExceptions;
@@ -16,12 +17,14 @@ public interface AdminDao {
 	
 	public boolean deletePlan(int id) throws HrExceptions;
 	
-	public List<Long> findPlanByVehicle(String vehicleType) throws HrExceptions;
+	public List<Long> estimatePlan(String vehicleType) throws HrExceptions;
 	
-	public List<User> getAllUsers() throws HrExceptions;
+	public Long PlanAmount(String vehicleType,String planType) throws HrExceptions;
 	
-	public boolean addUser(User u) throws HrExceptions;
+	public abstract int approveClaim(long reqNum); 
 	
-	public boolean CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
+	public int declineClaim(long reqNum); 
+	
+	public abstract List<Claims> viewClaims();
 
 }

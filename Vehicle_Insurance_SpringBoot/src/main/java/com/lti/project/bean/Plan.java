@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 //can put entity name hello
@@ -14,6 +15,7 @@ public class Plan {
 	
 	@Id
 	@Column(name="Plan_Id")
+//	@OneToOne
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="PLAN_GEN")
     @SequenceGenerator(name="PLAN_GEN",sequenceName="plan_seq",allocationSize=1)
 	private int planId;

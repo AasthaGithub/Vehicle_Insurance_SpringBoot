@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,6 +17,7 @@ public class User {
 	
 	@Id
 	@Column(name="User_id")
+//	@OneToOne
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="USER_GEN")
     @SequenceGenerator(name="USER_GEN",sequenceName="user_seq",allocationSize=1)
 	private int userId;

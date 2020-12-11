@@ -21,18 +21,16 @@ public abstract List<Policy> getAllPolicies() throws HrExceptions;
 	
 	public List<Vehicle> getAllVehicle() throws HrExceptions;
 	
-	public abstract boolean addPolicy(Policy p) throws HrExceptions;
+	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions;
 	
-	public boolean addVehicle(Vehicle v) throws HrExceptions;
+	public boolean addVehicle(Vehicle v,int userId) throws HrExceptions;
 	
 	public abstract int updatePolicyEndDate(int id, Date newEndDate) throws HrExceptions;
 	
 	public abstract boolean deletePolicy(int id) throws HrExceptions;
 	
-	public abstract Policy findPolicyById(int id) throws HrExceptions;
-	
 	public abstract List<Claims> getClaims() throws HrExceptions;
 	
-	public abstract boolean claimPolicy(Claims clm) throws HrExceptions; 
+	public abstract boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions; 
 
 }

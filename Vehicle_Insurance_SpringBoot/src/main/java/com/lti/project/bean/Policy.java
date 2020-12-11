@@ -28,15 +28,15 @@ public class Policy {
 	private long policyNum;
 	
 	@JoinColumn(name="Vehicle_Reg_Num")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne
 	private Vehicle vehicleRegNum;
 	
 	@JoinColumn(name="User_Id")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private User userId;
 	
 	@JoinColumn(name="Plan_Id")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Plan planId;
 	
 	@Column(name="Period")

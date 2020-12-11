@@ -155,22 +155,22 @@ public class UserController {
 	}
 	
 	
-	@PostMapping(value="/addpolicy",consumes="application/json")
-	public boolean addPolicy(@RequestBody Policy p) {
+	@RequestMapping(value="/addpolicy/{userId}/{regNum}/{planId}",consumes="application/json")
+	public boolean addPolicy(@RequestBody Policy p,@PathVariable int userId,@PathVariable String regNum,@PathVariable int planId) {
 		boolean res = false;
 		try {
-			res = user_service.addPolicy(p);
+			res = user_service.addPolicy(p,userId,regNum,planId);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
 	
-	@PostMapping(value="/addvehicle",consumes="application/json")
-	public boolean addVehicle(@RequestBody Vehicle v) {
+	@RequestMapping(value="/addvehicle/{userId}",consumes="application/json")
+	public boolean addVehicle(@RequestBody Vehicle v,@PathVariable int userId) {
 		boolean res = false;
 		try {
-			res = user_service.addVehicle(v);
+			res = user_service.addVehicle(v,userId);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
@@ -210,11 +210,11 @@ public class UserController {
 		return claimList;
 	}
 	
-	@PostMapping(value="/addclaims",consumes="application/json")
-	public boolean claimPolicy(@RequestBody Claims clm) {
+	@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json")
+	public boolean claimPolicy(@RequestBody Claims clm,@PathVariable long policyNum) {
 		boolean res = false;
 		try {
-			res = user_service.claimPolicy(clm);
+			res = user_service.claimPolicy(clm,policyNum);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}

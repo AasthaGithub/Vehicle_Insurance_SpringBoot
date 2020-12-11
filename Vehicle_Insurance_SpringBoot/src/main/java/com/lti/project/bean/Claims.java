@@ -28,7 +28,7 @@ public class Claims {
 	private Date claimDate;
 	
 	@JoinColumn(name="Policy_Num")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Policy policyNum;
 	
 	@Column(name="Approval_Status")

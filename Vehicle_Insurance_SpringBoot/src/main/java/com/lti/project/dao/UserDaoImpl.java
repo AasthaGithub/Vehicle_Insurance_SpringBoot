@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.lti.project.bean.Claims;
+import com.lti.project.bean.Plan;
 import com.lti.project.bean.Policy;
 import com.lti.project.bean.User;
 import com.lti.project.bean.Vehicle;
@@ -35,6 +36,12 @@ public class UserDaoImpl implements UserDao{
 		Query qry = manager.createQuery(strQry);
 		List<User> userList= qry.getResultList();
 		return userList;
+	}
+	
+	@Override
+	public User getUserById(int id) throws HrExceptions {
+		User usr = manager.find(User.class,id);
+		return usr;
 	}
 
 	@Override
@@ -70,23 +77,43 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Override
+	public Policy getPolicyById(long policyNum) throws HrExceptions {
+		return manager.find(Policy.class, policyNum);
+	}
+	
+	@Override
 	public List<Vehicle> getAllVehicle() throws HrExceptions {
 		String strQry = "from Vehicle";
 		Query qry = manager.createQuery(strQry);
 		List<Vehicle> vehicleList= qry.getResultList();
 		return vehicleList;
 	}
+	
+	@Override
+	public Vehicle getVehicleByRegNum(String regNum) throws HrExceptions {
+		return manager.find(Vehicle.class,regNum);
+	}
+	
+	@Override
+	public Plan getPlanById(int planId) throws HrExceptions {
+		return manager.find(Plan.class, planId);
+	}
+	
 
 	@Transactional
 	@Override
-	public boolean addPolicy(Policy p) throws HrExceptions {
+	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions {
+		p.setUserId(getUserById(userId));
+		p.setVehicleRegNum(getVehicleByRegNum(regNum));
+		p.setPlanId(getPlanById(planId));
 		manager.persist(p);
 		return true;
 	}
 	
 	@Transactional
 	@Override
-	public boolean addVehicle(Vehicle v) throws HrExceptions {
+	public boolean addVehicle(Vehicle v,int userId) throws HrExceptions {
+		v.setUserId(getUserById(userId));
 		manager.persist(v);
 		return true;
 	}
@@ -109,12 +136,6 @@ public class UserDaoImpl implements UserDao{
 		manager.remove(p);
 		return true;
 	}
-
-	@Override
-	public Policy findPolicyById(int id) throws HrExceptions {
-		Policy p = manager.find(Policy.class, id);
-		return p;
-	}
 	
 	
 	///////////////////Claims/////////////////
@@ -133,7 +154,7 @@ public class UserDaoImpl implements UserDao{
 	
 	@Transactional
 	@Override
-	public  boolean claimPolicy(Claims clm) throws HrExceptions
+	public  boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions
 	{	
 		int appramt=0;
 		if (clm.getReason().equals("Natural Disaster")){
@@ -150,11 +171,11 @@ public class UserDaoImpl implements UserDao{
 		}
 		
 		clm.setApprovAmt(appramt);
+		clm.setPolicyNum(getPolicyById(policyNum));
 		clm.setApprovStatus("Pending");
 		manager.persist(clm);
 		
 		return true;
 	}
-	
 
 }

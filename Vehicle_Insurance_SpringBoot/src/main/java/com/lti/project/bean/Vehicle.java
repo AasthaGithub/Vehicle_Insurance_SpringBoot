@@ -1,5 +1,6 @@
 package com.lti.project.bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="vehicles")
-public class Vehicle {
+public class Vehicle implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name="Vehicle_Reg_Num")
@@ -22,7 +24,7 @@ public class Vehicle {
 	private String regNum;
 	
 	@JoinColumn(name="User_id")
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private User userId;
 	
 	@Column(name="Model")

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
 import com.lti.project.service.UserService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
@@ -199,16 +201,27 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping(value="/claims",produces="application/json")
-	public List<Claims> getClaimList(){
-		List<Claims> claimList = null; 
+	@GetMapping(value="/userclaims/{reqnum}")
+	public Claims getClaimsById(@PathVariable long reqnum)
+	{
+		 Claims res=null;
 		try {
-			claimList =  user_service.getClaims();
+			res= user_service.getClaimsById(reqnum);
 		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return res;
+		
+	}
+	
+	@GetMapping(value="/claims",produces="application/json")
+	public List<Claims> viewClaims(){
+		List<Claims> claimList = null; 
+		claimList =  service.viewClaims();
 		return claimList;
 	}
+	
 	
 	@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json")
 	public boolean claimPolicy(@RequestBody Claims clm,@PathVariable long policyNum) {

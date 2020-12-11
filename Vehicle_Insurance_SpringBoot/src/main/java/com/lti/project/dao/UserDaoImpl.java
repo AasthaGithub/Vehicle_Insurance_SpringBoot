@@ -141,12 +141,14 @@ public class UserDaoImpl implements UserDao{
 	///////////////////Claims/////////////////
 	
 	@Override
-	public List<Claims> getClaims() throws HrExceptions
+	public Claims getClaimsById(long reqnum) throws HrExceptions
 	{
-		String strQry = "from Claims";
-		Query qry = manager.createQuery(strQry);
-		List<Claims> claimList= qry.getResultList();
-		return claimList;
+		//String strQry = "from Claims";
+		//Query qry = manager.createQuery(strQry);
+		
+		Claims cbyid= manager.find(Claims.class, reqnum);
+		return  cbyid;
+		
 		//user method
 		
 		

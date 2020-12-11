@@ -29,7 +29,7 @@ public abstract List<Policy> getAllPolicies() throws HrExceptions;
 	
 	public abstract boolean deletePolicy(int id) throws HrExceptions;
 	
-	public abstract List<Claims> getClaims() throws HrExceptions;
+	public Claims getClaimsById(long reqnum) throws HrExceptions;
 	
 	public abstract boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions; 
 

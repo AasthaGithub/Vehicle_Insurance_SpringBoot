@@ -72,8 +72,8 @@ public class UserServiceImpl implements UserService{
 
 	
 	//////////////////////Claims///////////////////////////
-	public Claims getClaimsById(long reqnum) throws HrExceptions{
-		 Claims cbyid= dao.getClaimsById(reqnum);
+	public List<Claims> getClaimsById(int uid) throws HrExceptions{
+		 List<Claims> cbyid= dao.getClaimsById(uid);
 		 return cbyid;
 		//user method
 	}

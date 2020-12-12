@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -201,12 +202,13 @@ public class UserController {
 		return res;
 	}
 	
-	@GetMapping(value="/userclaims/{reqnum}")
-	public Claims getClaimsById(@PathVariable long reqnum)
+	//user
+	@GetMapping(value="/userclaims/{uid}")
+	public List<Claims> getClaimsById(@PathVariable int uid)
 	{
-		 Claims res=null;
+		 List<Claims> res=null;
 		try {
-			res= user_service.getClaimsById(reqnum);
+			res= user_service.getClaimsById(uid);
 		} catch (HrExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -215,6 +217,19 @@ public class UserController {
 		
 	}
 	
+	//user
+		@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json")
+		public boolean claimPolicy(@RequestBody Claims clm,@PathVariable long policyNum) {
+			boolean res = false;
+			try {
+				res = user_service.claimPolicy(clm,policyNum);
+			} catch (HrExceptions e) {
+				e.printStackTrace();
+			}
+			return res;
+		}
+		
+	//admin
 	@GetMapping(value="/claims",produces="application/json")
 	public List<Claims> viewClaims(){
 		List<Claims> claimList = null; 
@@ -222,15 +237,17 @@ public class UserController {
 		return claimList;
 	}
 	
-	
-	@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json")
-	public boolean claimPolicy(@RequestBody Claims clm,@PathVariable long policyNum) {
-		boolean res = false;
-		try {
-			res = user_service.claimPolicy(clm,policyNum);
-		} catch (HrExceptions e) {
-			e.printStackTrace();
-		}
-		return res;
+	//admin
+	@PutMapping(value="/approvclaim/{reqNum}")
+   public int approveClaim(@RequestBody long reqNum) {
+	 return service.approveClaim(reqNum);
 	}
+	
+	//admin
+	@PutMapping(value="/declineclaim/{reqNum}")
+	public int declineClaim(@RequestBody long reqNum) {
+		return service.declineClaim(reqNum);
+	}
+	
+	
 }

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import com.lti.project.bean.Claims;
@@ -74,6 +75,7 @@ public class AdminDaoImpl implements AdminDao{
 	}
 	
 	@Transactional
+	@Modifying
 	public int approveClaim(long reqNum) {
 		
 		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
@@ -86,6 +88,7 @@ public class AdminDaoImpl implements AdminDao{
 	}
 	
 	@Transactional
+	@Modifying
 	public int declineClaim(long reqNum) {
 		
 		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";

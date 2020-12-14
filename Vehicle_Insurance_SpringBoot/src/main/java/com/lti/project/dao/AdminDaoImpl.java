@@ -78,7 +78,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Modifying
 	public int approveClaim(long reqNum) {
 		
-		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		String strQry= "UPDATE  Claims set ApprovStatus=:stat WHERE Request_Num=:reqno";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("stat","Approved");
 		qry.setParameter("reqno",reqNum);
@@ -91,7 +91,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Modifying
 	public int declineClaim(long reqNum) {
 		
-		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		String strQry= "UPDATE  Claims set ApprovStatus=:stat WHERE Request_Num=:reqno";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("stat","Declined");
 		qry.setParameter("reqno",reqNum);

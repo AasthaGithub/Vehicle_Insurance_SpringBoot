@@ -238,14 +238,14 @@ public class UserController {
 	}
 	
 	//admin
-	@PutMapping(value="/approvclaim/{reqNum}")
-   public int approveClaim(@RequestBody long reqNum) {
+	@GetMapping(value="/approvclaim/{reqNum}")
+   public int approveClaim(@PathVariable long reqNum) {
 	 return service.approveClaim(reqNum);
 	}
 	
 	//admin
-	@PutMapping(value="/declineclaim/{reqNum}")
-	public int declineClaim(@RequestBody long reqNum) {
+	@GetMapping(value="/declineclaim/{reqNum}")
+	public int declineClaim(@PathVariable long reqNum) {
 		return service.declineClaim(reqNum);
 	}
 	

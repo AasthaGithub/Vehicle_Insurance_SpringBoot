@@ -203,12 +203,12 @@ public class UserController {
 	}
 	
 	//user
-	@GetMapping(value="/userclaims/{uid}")
-	public List<Claims> getClaimsById(@PathVariable int uid)
+	@GetMapping(value="/userclaims/{userEmail}")
+	public List<Claims> getClaimsById(@PathVariable String userEmail)
 	{
 		 List<Claims> res=null;
 		try {
-			res= user_service.getClaimsById(uid);
+			res= user_service.getClaimsById(userEmail);
 		} catch (HrExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

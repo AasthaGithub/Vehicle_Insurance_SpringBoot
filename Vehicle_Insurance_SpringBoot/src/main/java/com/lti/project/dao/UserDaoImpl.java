@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao{
 		return usr;
 	}
 	
-	///////////////////////Policies/////////////////
+	///////////////////////Policies////////////////////////
 	
 	@Override
 	public List<Policy> getAllPolicies() throws HrExceptions {

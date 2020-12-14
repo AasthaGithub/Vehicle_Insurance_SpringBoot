@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
+	public User CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
 		int id = -1;
 		String getidQry = "Select userId from User where userEmail = :EnteredEmail";
 		Query idQry = manager.createQuery(getidQry);
@@ -53,17 +53,15 @@ public class UserDaoImpl implements UserDao{
 		id =  (int) idQry.getSingleResult();
 		String strQry ="Select userPswd from User Where userId=:uid";
 		Query qry = manager.createQuery(strQry);
-		qry.setParameter("EnteredEmail",EnteredEmail);
+		qry.setParameter("uid",id);
 		String ActualPassword= (String) qry.getSingleResult();
+		User usr = null;
 		
 		if ((ActualPassword).equals(EnteredPassword))
 		{
-		return true;
+			usr = getUserById(id);
 		}
-		else 
-		{
-		return false;
-		}
+		return usr;
 	}
 	
 	///////////////////////Policies/////////////////
@@ -74,6 +72,18 @@ public class UserDaoImpl implements UserDao{
 		Query qry = manager.createQuery(strQry);
 		List<Policy> policyList= qry.getResultList();
 		return policyList;
+	}
+	
+	@Override
+	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions {
+		String str = "from User where userEmail=:uId";
+		Query qry1 = manager.createQuery(str);
+		qry1.setParameter("uId", userEmail);
+		User usr = (User)qry1.getSingleResult();
+		String strQry ="from Policy where userId=:uid";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("uid", usr);
+		return qry.getResultList();
 	}
 	
 	@Override
@@ -177,5 +187,6 @@ public class UserDaoImpl implements UserDao{
 		
 		return true;
 	}
+
 
 }

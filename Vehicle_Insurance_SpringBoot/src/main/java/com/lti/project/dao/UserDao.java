@@ -17,7 +17,7 @@ public interface UserDao {
 	public User getUserById(int id) throws HrExceptions;
 	
 	public boolean addUser(User u) throws HrExceptions;
-	
+	//updated checkLogin
 	public User CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
 	
 	//Policies

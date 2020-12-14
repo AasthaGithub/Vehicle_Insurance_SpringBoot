@@ -14,7 +14,7 @@ public interface UserService {
 public List<User> getAllUsers() throws HrExceptions;
 	
 	public boolean addUser(User u) throws HrExceptions;
-	
+	//updated checkLogin
 	public User CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
 	
 	public abstract List<Policy> getAllPolicies() throws HrExceptions;

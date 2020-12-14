@@ -127,7 +127,7 @@ public class UserController {
 		}
 		return res;
 	}
-	
+	//updated checkLogin
 	@RequestMapping(value="/checklogin/{EnteredEmail}/{EnteredPassword}",method= RequestMethod.GET)
 	public User checkLogin(@PathVariable String EnteredEmail,@PathVariable String EnteredPassword){
 		User usr = null;

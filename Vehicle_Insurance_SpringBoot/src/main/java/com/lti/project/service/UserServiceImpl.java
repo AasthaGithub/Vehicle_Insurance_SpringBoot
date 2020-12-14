@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
 		return dao.getAllPolicies();
 	}
 	
-
+//changed policy by user
 	@Override
 	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions {
 		return dao.getPolicyByUser(userEmail);

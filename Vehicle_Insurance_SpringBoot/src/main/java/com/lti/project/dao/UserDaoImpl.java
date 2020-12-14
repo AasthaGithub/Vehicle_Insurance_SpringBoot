@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao{
 		User usr = manager.find(User.class,id);
 		return usr;
 	}
-
+//changed login
 	@Override
 	public User CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
 		int id = -1;

@@ -23,7 +23,8 @@ import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
 import com.lti.project.service.UserService;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {

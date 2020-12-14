@@ -42,7 +42,7 @@ public interface UserDao {
 	public boolean deletePolicy(int id) throws HrExceptions;
 	
 	//Claims
-	public abstract List<Claims> getClaims() throws HrExceptions;
+	public List<Claims> getClaimsById(String userEmail) throws HrExceptions; //mfrc
 	
-	public abstract boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions; 
+	public abstract boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions; //mfrc
 }

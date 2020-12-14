@@ -21,10 +21,10 @@ public interface AdminDao {
 	
 	public Long PlanAmount(String vehicleType,String planType) throws HrExceptions;
 	
-	public abstract int approveClaim(long reqNum); 
+	public abstract int approveClaim(long reqNum); //mfrc
 	
-	public int declineClaim(long reqNum); 
+	public int declineClaim(long reqNum); //mfrc
 	
-	public abstract List<Claims> viewClaims();
+	public abstract List<Claims> viewClaims(); //mfrc//DONE
 
 }

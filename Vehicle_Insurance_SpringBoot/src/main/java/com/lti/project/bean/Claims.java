@@ -25,7 +25,7 @@ public class Claims {
 	private long Request_Num;
 	
 	@Column(name="Claim_Date")
-	private Date claimDate;
+	private Date claimDate;  
 	
 	@JoinColumn(name="Policy_Num")
 	@ManyToOne(fetch=FetchType.EAGER)

@@ -31,7 +31,7 @@ public List<User> getAllUsers() throws HrExceptions;
 	
 	public abstract boolean deletePolicy(int id) throws HrExceptions;
 	
-	public abstract List<Claims> getClaims() throws HrExceptions;
+	public List<Claims> getClaimsById(String userEmail) throws HrExceptions;
 	
 	public abstract boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions; 
 

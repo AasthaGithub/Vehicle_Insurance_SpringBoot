@@ -151,12 +151,21 @@ public class UserDaoImpl implements UserDao{
 	///////////////////Claims/////////////////
 	
 	@Override
-	public List<Claims> getClaims() throws HrExceptions
+	public List<Claims> getClaimsById(String userEmail) throws HrExceptions
 	{
-		String strQry = "from Claims";
+		String strQry1= "from User where userEmail=:uid";
+		Query qry1 = manager.createQuery(strQry1);
+		qry1.setParameter("uid", userEmail);
+		User usr= (User)qry1.getSingleResult();
+		
+		String strQry = " select c.claimDate, c.ApprovStatus, c.reqAmt "
+				+ "from Claims c, Policy p "
+				+ "where p.policyNum=c.policyNum and p.userId=:uid";
+		
 		Query qry = manager.createQuery(strQry);
-		List<Claims> claimList= qry.getResultList();
-		return claimList;
+		List<Claims> resList= qry.setParameter("uid",usr).getResultList();
+		return  resList;
+		
 		//user method
 		
 		

@@ -18,12 +18,13 @@ public List<User> getAllUsers() throws HrExceptions;
 	public User CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
 	
 	public abstract List<Policy> getAllPolicies() throws HrExceptions;
-
+	
 	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions;
 	
 	public List<Vehicle> getAllVehicle() throws HrExceptions;
-	
+
 	public boolean addPolicy(Policy p,String userId,String regNum,int planId) throws HrExceptions;
+
 	
 	public boolean addVehicle(Vehicle v,String userEmail) throws HrExceptions;
 	

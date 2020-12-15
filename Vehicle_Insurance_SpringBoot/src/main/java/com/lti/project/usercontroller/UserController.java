@@ -27,6 +27,7 @@ import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
 import com.lti.project.service.UserService;
 
+
 @CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 @RestController
 @RequestMapping("/api/v1")
@@ -162,6 +163,7 @@ public class UserController {
 		return policyList;
 	}
 	
+	
 	@GetMapping(value="/policies/{uemail}",produces="application/json")
 	public List<Policy> getPolicyByUser(@PathVariable String uemail){
 		List<Policy> policyList = null; 
@@ -267,27 +269,27 @@ public class UserController {
 			return res;
 		}
 		
-		
-		//admin
-		@GetMapping(value="/claims",produces="application/json")
-		public List<Claims> viewClaims(){
-			List<Claims> claimList = null; 
-			claimList =  service.viewClaims();
-			return claimList;
-		}
-		
-		//admin
-		@GetMapping(value="/approvclaim/{reqNum}")
-	   public int approveClaim(@PathVariable long reqNum) {
-		 return service.approveClaim(reqNum);
-		}
-		
-		//admin
-		@GetMapping(value="/declineclaim/{reqNum}")
-		public int declineClaim(@PathVariable long reqNum) {
-			return service.declineClaim(reqNum);
-		}
-		
+
+	//admin
+	@GetMapping(value="/claims",produces="application/json")
+	public List<Claims> viewClaims(){
+		List<Claims> claimList = null; 
+		claimList =  service.viewClaims();
+		return claimList;
+	}
+	
+	//admin
+	@GetMapping(value="/approvclaim/{reqNum}")
+   public int approveClaim(@PathVariable long reqNum) {
+	 return service.approveClaim(reqNum);
+	}
+	
+	//admin
+	@GetMapping(value="/declineclaim/{reqNum}")
+	public int declineClaim(@PathVariable long reqNum) {
+		return service.declineClaim(reqNum);
+	}
+
 	
 	
 }

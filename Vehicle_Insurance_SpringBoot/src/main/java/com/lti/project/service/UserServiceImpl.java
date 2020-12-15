@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService{
 		return dao.getAllVehicle();
 	}
 	
+	
 	@Transactional
 	@Override
 	public boolean addPolicy(Policy p,String userId,String regNum,int planId) throws HrExceptions {
@@ -94,6 +95,8 @@ public class UserServiceImpl implements UserService{
 	public List<String> getVehicleNamesList(String vehicle_type) throws HrExceptions {
 		return dao.getVehicleNamesList(vehicle_type);
 	}
+
+	
 
 	
 

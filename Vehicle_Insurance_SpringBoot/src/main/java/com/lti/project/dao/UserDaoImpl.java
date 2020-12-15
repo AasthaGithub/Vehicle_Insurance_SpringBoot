@@ -131,10 +131,11 @@ public class UserDaoImpl implements UserDao{
 	@Transactional
 	@Override
 	public int updatePolicyEndDate(int id, Date newEndDate) throws HrExceptions {
-		String strQry = "update Policy set endDate=:newEndDate where policyId=:pid";
+		long pid=id;
+		String strQry = "update Policy set endDate=:newEndDate where policyNum=:pid";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("newEndDate",newEndDate);
-		qry.setParameter("pid",id);
+		qry.setParameter("pid",pid);
 		int i = qry.executeUpdate();
 		return i;
 	}

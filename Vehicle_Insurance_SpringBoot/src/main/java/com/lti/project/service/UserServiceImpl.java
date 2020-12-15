@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService{
 		return dao.getAllVehicle();
 	}
 	
+	
 	@Transactional
 	@Override
 	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions {
@@ -88,6 +89,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions {
 		return dao.claimPolicy(clm,policyNum);
+	}
+
+	@Override
+	public Policy getPolicyById(long policyNum) throws HrExceptions {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

@@ -19,9 +19,12 @@ public List<User> getAllUsers() throws HrExceptions;
 	
 	public abstract List<Policy> getAllPolicies() throws HrExceptions;
 
+	public Policy getPolicyById(long policyNum) throws HrExceptions;
+	
 	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions;
 	
 	public List<Vehicle> getAllVehicle() throws HrExceptions;
+	
 	
 	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions;
 	

@@ -151,6 +151,7 @@ public class UserController {
 		return policyList;
 	}
 	
+	
 	@GetMapping(value="/policies/{uemail}",produces="application/json")
 	public List<Policy> getPolicyByUser(@PathVariable String uemail){
 		List<Policy> policyList = null; 

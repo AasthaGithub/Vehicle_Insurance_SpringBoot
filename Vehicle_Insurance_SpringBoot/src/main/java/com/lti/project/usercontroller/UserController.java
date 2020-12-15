@@ -4,6 +4,8 @@ package com.lti.project.usercontroller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.xml.ws.Holder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.project.bean.Claims;
@@ -124,16 +128,16 @@ public class UserController {
 		}
 		return res;
 	}
-	
-	@GetMapping(value="/login/{EnteredEmail}/{EnteredPassword}")
-	public boolean checkLogin(@PathVariable String EnteredEmail, @PathVariable String EnteredPassword ){
-		boolean loginStatus = false;
+	//updated checkLogin
+	@RequestMapping(value="/checklogin/{EnteredEmail}/{EnteredPassword}",method= RequestMethod.GET)
+	public User checkLogin(@PathVariable String EnteredEmail,@PathVariable String EnteredPassword){
+		User usr = null;
 		try {
-			 loginStatus = user_service.CheckLogin(EnteredEmail, EnteredPassword);
+			 usr = user_service.CheckLogin(EnteredEmail, EnteredPassword);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
-		return loginStatus;
+		return usr;
 	}
 	
 	@GetMapping(value="/policies",produces="application/json")
@@ -141,6 +145,17 @@ public class UserController {
 		List<Policy> policyList = null; 
 		try {
 			policyList =  user_service.getAllPolicies();
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return policyList;
+	}
+	
+	@GetMapping(value="/policies/{uemail}",produces="application/json")
+	public List<Policy> getPolicyByUser(@PathVariable String uemail){
+		List<Policy> policyList = null; 
+		try {
+			policyList =  user_service.getPolicyByUser(uemail);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}

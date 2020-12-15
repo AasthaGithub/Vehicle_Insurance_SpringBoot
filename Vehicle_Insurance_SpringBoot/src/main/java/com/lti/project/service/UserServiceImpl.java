@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
+	public User CheckLogin(String EnteredEmail, String EnteredPassword) throws HrExceptions {
 		return dao.CheckLogin(EnteredEmail, EnteredPassword);
 	}
 	
@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<Policy> getAllPolicies() throws HrExceptions {
 		return dao.getAllPolicies();
+	}
+	
+//changed policy by user
+	@Override
+	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions {
+		return dao.getPolicyByUser(userEmail);
 	}
 	
 	@Override
@@ -83,6 +89,7 @@ public class UserServiceImpl implements UserService{
 	public boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions {
 		return dao.claimPolicy(clm,policyNum);
 	}
+
 	
 
 }

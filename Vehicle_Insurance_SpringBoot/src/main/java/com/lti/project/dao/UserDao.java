@@ -17,13 +17,15 @@ public interface UserDao {
 	public User getUserById(int id) throws HrExceptions;
 	
 	public boolean addUser(User u) throws HrExceptions;
-	
-	public boolean CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
+	//updated checkLogin
+	public User CheckLogin(String EnteredEmail , String EnteredPassword) throws HrExceptions;
 	
 	//Policies
 	public List<Policy> getAllPolicies() throws HrExceptions;
 	
 	public Policy getPolicyById(long policyNum) throws HrExceptions;
+	
+	public List<Policy> getPolicyByUser(String userEmail) throws HrExceptions;
 	
 	public List<Vehicle> getAllVehicle() throws HrExceptions;
 	

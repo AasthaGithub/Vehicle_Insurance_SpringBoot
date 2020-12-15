@@ -20,7 +20,6 @@ public class Vehicle implements Serializable{
 	
 	@Id
 	@Column(name="Vehicle_Reg_Num")
-//	@OneToOne
 	private String regNum;
 	
 	@JoinColumn(name="User_id")

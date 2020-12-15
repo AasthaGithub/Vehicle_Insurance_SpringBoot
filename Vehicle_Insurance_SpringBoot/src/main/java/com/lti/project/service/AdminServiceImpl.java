@@ -48,9 +48,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions {
-		return dao.PlanAmount(vehicleType, planType);
+	public int PlanId(String vehicleType, String planType) throws HrExceptions {
+		return dao.PlanId(vehicleType, planType);
 	}
+	
 	
 	public int approveClaim(long reqNum) {
 		return dao.approveClaim(reqNum);
@@ -64,6 +65,11 @@ public class AdminServiceImpl implements AdminService{
 	public  List<Claims> viewClaims(){
 		return dao.viewClaims();
 		//admin method
+	}
+
+	@Override
+	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions {
+		return dao.PlanAmount(vehicleType, planType);
 	}
 
 	

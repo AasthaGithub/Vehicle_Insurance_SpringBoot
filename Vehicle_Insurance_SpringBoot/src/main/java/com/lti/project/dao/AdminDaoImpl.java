@@ -65,6 +65,16 @@ public class AdminDaoImpl implements AdminDao{
 	}
 	
 	@Override
+	public int PlanId(String vehicleType, String planType) throws HrExceptions {
+		String strQry = "select planId from Plan where vehicleType like :vehicle and planType like :plan";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("vehicle", "%"+vehicleType+"%");
+		qry.setParameter("plan", "%"+planType+"%");
+		int res = (int) qry.getSingleResult();
+		return res;
+	}
+	
+	@Override
 	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions {
 		String strQry = "select planAmt from Plan where vehicleType like :vehicle and planType like :plan";
 		Query qry = manager.createQuery(strQry);
@@ -78,7 +88,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Modifying
 	public int approveClaim(long reqNum) {
 		
-		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		String strQry= "UPDATE  Claims set ApprovStatus=:stat WHERE Request_Num=:reqno";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("stat","Approved");
 		qry.setParameter("reqno",reqNum);
@@ -91,7 +101,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Modifying
 	public int declineClaim(long reqNum) {
 		
-		String strQry= "UPDATE  Claims ApprovStatus=:stat WHERE Request_Num=:reqno";
+		String strQry= "UPDATE  Claims set ApprovStatus=:stat WHERE Request_Num=:reqno";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("stat","Declined");
 		qry.setParameter("reqno",reqNum);

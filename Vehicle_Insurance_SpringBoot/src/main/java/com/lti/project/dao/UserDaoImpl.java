@@ -112,8 +112,12 @@ public class UserDaoImpl implements UserDao{
 
 	@Transactional
 	@Override
-	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions {
-		p.setUserId(getUserById(userId));
+	public boolean addPolicy(Policy p,String userId,String regNum,int planId) throws HrExceptions {
+		String strQry = "from User where userEmail=:uemail";
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("uemail",userId);
+		User usr = (User)qry.getSingleResult();
+		p.setUserId(usr);
 		p.setVehicleRegNum(getVehicleByRegNum(regNum));
 		p.setPlanId(getPlanById(planId));
 		manager.persist(p);
@@ -122,8 +126,12 @@ public class UserDaoImpl implements UserDao{
 	
 	@Transactional
 	@Override
-	public boolean addVehicle(Vehicle v,int userId) throws HrExceptions {
-		v.setUserId(getUserById(userId));
+	public boolean addVehicle(Vehicle v,String userEmail) throws HrExceptions {
+		String str = "from User where userEmail=:uId";
+		Query qry1 = manager.createQuery(str);
+		qry1.setParameter("uId", userEmail);
+		User usr = (User)qry1.getSingleResult();
+		v.setUserId(usr);
 		manager.persist(v);
 		return true;
 	}
@@ -131,10 +139,11 @@ public class UserDaoImpl implements UserDao{
 	@Transactional
 	@Override
 	public int updatePolicyEndDate(int id, Date newEndDate) throws HrExceptions {
-		String strQry = "update Policy set endDate=:newEndDate where policyId=:pid";
+		long pid=id;
+		String strQry = "update Policy set endDate=:newEndDate where policyNum=:pid";
 		Query qry = manager.createQuery(strQry);
 		qry.setParameter("newEndDate",newEndDate);
-		qry.setParameter("pid",id);
+		qry.setParameter("pid",pid);
 		int i = qry.executeUpdate();
 		return i;
 	}
@@ -145,6 +154,17 @@ public class UserDaoImpl implements UserDao{
 		Policy p = manager.find(Policy.class, id);
 		manager.remove(p);
 		return true;
+	}
+	
+	@Override
+	public List<String> getVehicleNamesList(String vehicle_type) throws HrExceptions {
+		String strQry = "select p.vehicleType from Plan p where vehicleType like :vehicle";
+		
+		Query qry = manager.createQuery(strQry);
+		qry.setParameter("vehicle", "%"+vehicle_type+"%");
+		List<String> resList= qry.getResultList();
+		
+		return  resList;
 	}
 	
 	

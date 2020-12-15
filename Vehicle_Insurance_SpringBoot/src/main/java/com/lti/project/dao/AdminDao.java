@@ -19,7 +19,9 @@ public interface AdminDao {
 	
 	public List<Long> estimatePlan(String vehicleType) throws HrExceptions;
 	
-	public Long PlanAmount(String vehicleType,String planType) throws HrExceptions;
+	public int PlanId(String vehicleType,String planType) throws HrExceptions;
+	
+	public Long PlanAmount(String vehicleType, String planType) throws HrExceptions;
 	
 	public abstract int approveClaim(long reqNum); //mfrc
 	

@@ -27,7 +27,7 @@ import com.lti.project.exceptions.HrExceptions;
 import com.lti.project.service.AdminService;
 import com.lti.project.service.UserService;
 
-@CrossOrigin("*")
+@CrossOrigin(origins="http://localhost:4200",allowedHeaders="*")
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
@@ -94,11 +94,23 @@ public class UserController {
 		return lst;
 	}
 	
-	@GetMapping(value="/findAmt/{vehicle}/{plan}")
-	public Long getPlanAmt(@PathVariable String vehicle,@PathVariable String plan){
-		Long res = null; 
+	@GetMapping(value="/planId/{vehicle}/{plan}")
+	public int getPlanId(@PathVariable String vehicle,@PathVariable String plan){
+		int res = -1; 
 		try {
-			res =  service.PlanAmount(vehicle,plan);
+			res =  service.PlanId(vehicle,plan);
+		} catch (HrExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	@GetMapping(value = "/findAmt/{vehicle}/{plan}")
+	public Long getPlanAmt(@PathVariable String vehicle, @PathVariable String plan) {
+		Long res = null;
+		try {
+			res = service.PlanAmount(vehicle, plan);
 		} catch (HrExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,7 +186,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/addpolicy/{userId}/{regNum}/{planId}",consumes="application/json")
-	public boolean addPolicy(@RequestBody Policy p,@PathVariable int userId,@PathVariable String regNum,@PathVariable int planId) {
+	public boolean addPolicy(@RequestBody Policy p,@PathVariable String userId,@PathVariable String regNum,@PathVariable int planId) {
 		boolean res = false;
 		try {
 			res = user_service.addPolicy(p,userId,regNum,planId);
@@ -184,11 +196,11 @@ public class UserController {
 		return res;
 	}
 	
-	@RequestMapping(value="/addvehicle/{userId}",consumes="application/json")
-	public boolean addVehicle(@RequestBody Vehicle v,@PathVariable int userId) {
+	@RequestMapping(value="/addvehicle/{userEmail}",consumes="application/json")
+	public boolean addVehicle(@RequestBody Vehicle v,@PathVariable String userEmail) {
 		boolean res = false;
 		try {
-			res = user_service.addVehicle(v,userId);
+			res = user_service.addVehicle(v,userEmail);
 		} catch (HrExceptions e) {
 			e.printStackTrace();
 		}
@@ -217,6 +229,17 @@ public class UserController {
 		return res;
 	}
 	
+	@GetMapping(value = "plans/vtypes/{vehicle_type}", produces = "application/json")
+	public List<String> getVehicleList(@PathVariable String vehicle_type) {
+		List<String> vehicleNameList = null;
+		try {
+			vehicleNameList = user_service.getVehicleNamesList(vehicle_type);
+		} catch (HrExceptions e) {
+			e.printStackTrace();
+		}
+		return vehicleNameList;
+	}
+	
 	//user
 	@GetMapping(value="/userclaims/{userEmail}")
 	public List<Claims> getClaimsById(@PathVariable String userEmail)
@@ -233,7 +256,7 @@ public class UserController {
 	}
 	
 	//user
-		@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json")
+		@RequestMapping(value="/addclaims/{policyNum}",consumes="application/json",method=RequestMethod.POST)
 		public boolean claimPolicy(@RequestBody Claims clm,@PathVariable long policyNum) {
 			boolean res = false;
 			try {
@@ -244,25 +267,27 @@ public class UserController {
 			return res;
 		}
 		
-	//admin
-	@GetMapping(value="/claims",produces="application/json")
-	public List<Claims> viewClaims(){
-		List<Claims> claimList = null; 
-		claimList =  service.viewClaims();
-		return claimList;
-	}
-	
-	//admin
-	@PutMapping(value="/approvclaim/{reqNum}")
-   public int approveClaim(@RequestBody long reqNum) {
-	 return service.approveClaim(reqNum);
-	}
-	
-	//admin
-	@PutMapping(value="/declineclaim/{reqNum}")
-	public int declineClaim(@RequestBody long reqNum) {
-		return service.declineClaim(reqNum);
-	}
+		
+		//admin
+		@GetMapping(value="/claims",produces="application/json")
+		public List<Claims> viewClaims(){
+			List<Claims> claimList = null; 
+			claimList =  service.viewClaims();
+			return claimList;
+		}
+		
+		//admin
+		@GetMapping(value="/approvclaim/{reqNum}")
+	   public int approveClaim(@PathVariable long reqNum) {
+		 return service.approveClaim(reqNum);
+		}
+		
+		//admin
+		@GetMapping(value="/declineclaim/{reqNum}")
+		public int declineClaim(@PathVariable long reqNum) {
+			return service.declineClaim(reqNum);
+		}
+		
 	
 	
 }

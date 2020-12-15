@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Transactional
 	@Override
-	public boolean addPolicy(Policy p,int userId,String regNum,int planId) throws HrExceptions {
+	public boolean addPolicy(Policy p,String userId,String regNum,int planId) throws HrExceptions {
 		return dao.addPolicy(p,userId,regNum,planId);
 	}
 	
 	@Transactional
 	@Override
-	public boolean addVehicle(Vehicle v,int userId) throws HrExceptions {
-		return dao.addVehicle(v,userId);
+	public boolean addVehicle(Vehicle v,String userEmail) throws HrExceptions {
+		return dao.addVehicle(v,userEmail);
 	}
 
 	@Override
@@ -88,6 +88,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean claimPolicy(Claims clm,long policyNum) throws HrExceptions {
 		return dao.claimPolicy(clm,policyNum);
+	}
+
+	@Override
+	public List<String> getVehicleNamesList(String vehicle_type) throws HrExceptions {
+		return dao.getVehicleNamesList(vehicle_type);
 	}
 
 	
